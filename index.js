@@ -8,7 +8,10 @@ const puppeteer = require('puppeteer');
     let page = await browser.newPage(); // open a new page
 
     // await page.goto(URL) // open the url in new browser tab
+    // {waitUntil: 'networkidle2'} this tells the browser that the navigation is finished when there are no more than 2 network connection.
     await page.goto(URL, {waitUntil: 'networkidle2'});
+    await page.screenshot({path: 'assets/example.png'});
+    await page.pdf({path: 'assets/hn.pdf', format: 'A4'});
 
     // evaluate anything on the current page
     let data = await page.evaluate(() => {
