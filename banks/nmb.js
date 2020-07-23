@@ -3,13 +3,13 @@ const puppeteer = require('puppeteer');
 (async () => {
     const URL = "https://nmbbanknepal.com/nmb-visa-card-discount";
 
-    let browser = await puppeteer.launch({headless: false});
-    // let browser = await puppeteer.launch();
+    // let browser = await puppeteer.launch({headless: false});
+    let browser = await puppeteer.launch();
     let page = await browser.newPage();
 
     await page.goto(URL, {waitUntil: 'networkidle2'});
 
-    await page.evaluate(() => {
+   const data =  await page.evaluate(() => {
         let offers = [];
 
         let offerTable = document.querySelector("table[class='nmb-table']").rows
@@ -31,6 +31,10 @@ const puppeteer = require('puppeteer');
         })
         offers.shift()
 
-        console.log(offers)
+        return offers;
     })
+
+    console.log(data);
+
+   await browser.close();
 })();
